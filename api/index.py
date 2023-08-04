@@ -7,7 +7,7 @@ app = Flask(__name__)
 
 headers2 = {"Referer": "https://millionscast.com/"}
 headers = {
-    'Referer': 'https://lovesomecommunity.com/'
+    'Referer': 'https://pipcast.cc/'
 }
 
 def get_base_url(url):
@@ -20,10 +20,10 @@ def get_base_url(url):
 def credit():
     return "(CricHD-API) Made With ðŸ’— By ProximityBd"
 
-@app.route("/api/<string:channel_id>.m3u8")
+@app.route("/live/<string:channel_id>/master.m3u8")
 def handle_api(channel_id):
     
-    source_code = requests.get(f"https://lovesomecommunity.com/crichdcom.php?player=desktop&live={channel_id}").text 
+    source_code = requests.get(f"https://pipcast.cc/embed.php?v={channel_id}&vw=100%&vh=100%").text 
     print(source_code)
     regex = r"source:\s*['\"](.*?)['\"]"
     print(regex)

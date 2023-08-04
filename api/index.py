@@ -5,7 +5,7 @@ import re
 
 app = Flask(__name__)
 
-headers2 = {"Referer": "https://millionscast.com/"}
+headers2 = {"Referer": "https://lovesomecommunity.com/"}
 headers = {
     'Referer': 'https://pipcast.cc/'
 }
@@ -20,7 +20,7 @@ def get_base_url(url):
 def credit():
     return "(CricHD-API) Made With ðŸ’— By ProximityBd"
 
-@app.route("/live/<string:channel_id>/master.m3u8")
+@app.route("/cric-sd/<string:channel_id>/master.m3u8")
 def handle_api(channel_id):
     
     source_code = requests.get(f"https://pipcast.cc/embed.php?v={channel_id}&vw=100%&vh=100%").text 
@@ -54,11 +54,11 @@ def handle_ts():
 
 # ----------------
 
-@app.route("/api-v2")
+@app.route("/cric-hd/<string:channel_id>/master.m3u8")
 def handle_api2():
     channel_id = request.args.get("id")
 
-    response = requests.get(f"https://millionscast.com/crichdwas.php?player=desktop&live={channel_id}", headers={"Referer": "https://stream.crichd.vip/"})
+    response = requests.get(f"https://lovesomecommunity.com/crichdcom.php?player=desktop&live={channel_id}", headers={"Referer": "https://lovesomecommunity.com/"})
 
     match_string = "return("
     if "return(" not in response.text:

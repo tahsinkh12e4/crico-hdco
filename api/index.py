@@ -4,8 +4,11 @@ import requests
 import re
 
 app = Flask(__name__)
-headers = {"Referer": "https://lovesomecommunity.com/"}
-headers2 = {"Referer": "https://pipcast.cc/"}
+
+headers2 = {"Referer": "https://millionscast.com/"}
+headers = {
+    'Referer': 'https://pipcast.cc/'
+}
 
 def get_base_url(url):
     parsed_url = urlparse(url)
@@ -15,19 +18,23 @@ def get_base_url(url):
 
 @app.route("/")
 def credit():
-    return "(CricHD-API) Made By — CodeCrafters"
+    return "(CricHD-API) Made With ðŸ’— By ProximityBd"
 
 @app.route("/live/<string:channel_id>/master.m3u8")
-def handle_api():
-    channel_id = request.args["id"]
-    source_code = requests.get(f"https://lovesomecommunity.com/crichdsus.php?player=desktop&live={channel_id}").text 
+def handle_api(channel_id):
+    
+    source_code = requests.get(f"https://pipcast.cc/embed.php?v={channel_id}&vw=100%&vh=100%").text 
+    print(source_code)
     regex = r"source:\s*['\"](.*?)['\"]"
+    print(regex)
     match = re.search(regex, source_code)
+    
 
     if match and match.group(1):
         url = match.group(1)
     response = requests.get(url, headers=headers)
     response_lines = response.text.splitlines()
+    print(response_lines)
     for index, line in enumerate(response_lines):
         if ".ts" in line:
             response_lines[index] = "/ts?id=" + line + f"&base={get_base_url(url)}"
@@ -47,11 +54,11 @@ def handle_ts():
 
 # ----------------
 
-@app.route("/live-2/<string:channel_id>/master.m3u8")
+@app.route("/api-v2")
 def handle_api2():
     channel_id = request.args.get("id")
 
-    response = requests.get(f"https://pipcast.cc/embed.php?v={channel_id}&vw=100%&vh=100%")
+    response = requests.get(f"https://millionscast.com/crichdwas.php?player=desktop&live={channel_id}", headers={"Referer": "https://stream.crichd.vip/"})
 
     match_string = "return("
     if "return(" not in response.text:
